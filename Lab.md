@@ -13,29 +13,31 @@ The web app will then be available on `localhost:8080`. It is also important to 
 Our pen tester noted that it is possible to gain access to the database using SQL Injection.
 
 ![task](./task.png) Use SQL Injection to gain access to the secret message. Document which command you used.
-
+![solution](./secret-message.png)
+username: a
+password: ' OR 1=1--
 ![task](./task.png) Fix the backend so user input is sanitized.
 
 ## RISK #2: Insecure Storage
 The passwords are stored in plaintext in our database. That's a big problem. The client, however, refuses to migrate to a third party solution. 
 
 ![task](./task.png) Make sure the passwords in the database are encrypted.
-
+This is already provided at: frontend/database_solution.sql
 ![task](./task.png) Make sure your solution doesn't break the login screen!
 
 ## RISK #3: CORS
 Our database can be queried from anywhere. We would like to avoid this by using CORS.
 
 ![task](./task.png) Research CORS. How can it help us?
-
+CORS is a browser security feature that controls which websites can access your backend. By restricting it to your frontend, you prevent other websites from making requests through a user’s browser. However, it is not a complete security measure, since direct requests (e.g. via curl or Postman) are still possible.
 ![task](./task.png) Make sure CORS is used so our backend can only be used by our frontend.
 
 ## RISK #4: Credentials in Version Control
 Right now, there are a whole lot of credentials hidden in the dockerfiles but also our backend code. These files are usually a part of our version control, making our credentials easy to track down.
 
 ![task](./task.png) We don't want our credentials in our dockerfiles or our docker compose file. How can we avoid this? Our solution should not be a part of the version control system.
-
+use .env files for local credentials and .env.local to show what vars are needed
 ![task](./task.png) Use the same solution to remove the credentials from the backend.
 
 ![task](./task.png) The damage has been done. Our credentials are exposed in an earlier commit of our version control. What would you recommend?
-
+They should definitely be considered compromised, and secrets/passwords should be rotated immediately, then for git you could rewrite git history or just make a new repo.
